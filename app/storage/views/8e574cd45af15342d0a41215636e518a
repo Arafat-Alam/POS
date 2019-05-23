@@ -1,0 +1,147 @@
+
+
+<?php $__env->startSection('content'); ?>
+		<div class="row">
+			<div class="span12">
+				<div class="widget-header">
+					<i class="icon-user"></i>
+					<h3>Edit Sofware Settings</h3>
+				</div> <!-- /widget-header -->
+				
+				<div class="widget-content">	
+					<div class="row">
+						<div class="span12">						
+							<?php echo $__env->make('_sessionMessage', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+							<?php echo Form::model($editInfo, array('route' => 'updateInstall.post', $editInfo->company_id, 'id' => 'validate_wizard', 'class' => 'stepy-wizzard form-horizontal')); ?>	
+								<fieldset title="Company info">
+									<legend class="hide">Basic Information</legend>							
+									<?php echo Form::hidden('company_id', $editInfo->company_id); ?>
+
+									<div class="formSep control-group">		
+										<?php echo Form::label('id_company_name','Company Name', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::text('company_name', null, array('class' => 'span8', 'id' => 'id_company_name', 'placeholder' => 'Enter First Name')); ?>
+
+											<?php echo $errors->first('company_name','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div>
+									<div class="formSep control-group">		
+										<?php echo Form::label('id_web_address','Web Address', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::text('web_address', null, array('class' => 'span8', 'id' => 'id_web_address', 'placeholder' => 'Enter Web Address')); ?>
+
+											<?php echo $errors->first('web_address','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div>
+									<div class="formSep control-group">		
+										<?php echo Form::label('Address', 'Address', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::text('address', null, array('class' => 'span8', 'id' => 'Address', 'placeholder' => 'Enter address')); ?>
+
+										</div> <!-- /controls -->					
+									</div> <!-- /control-group -->	
+									<div class="formSep control-group">		
+										<?php echo Form::label('id_mob_no','Mobile No', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::text('mobile', null, array('class' => 'span8', 'id' => 'id_mob_no', 'placeholder' => 'Enter Web Address')); ?>
+
+											<?php echo $errors->first('mobile','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div>
+								</fieldset>
+								
+								<fieldset title="Software Info">
+									<legend class="hide">Software information</legend>
+									
+									<div class="formSep control-group">		
+										<?php echo Form::label('id_discount','Maximum Discount(%)', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::text('max_inv_dis_percent', null, array('class' => 'span8', 'id' => 'id_discount', 'placeholder' => 'Enter Web Address')); ?>
+
+											<?php echo $errors->first('max_inv_dis_percent','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div>
+									<div class="formSep control-group">		
+										<?php echo Form::label('back_date_entry','Back Date Entry', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::checkbox('back_date_sales',1,$editInfo->back_date_sales); ?>
+
+											  Sales 
+											<?php echo Form::checkbox('back_date_purchase',1,$editInfo->back_date_purchase); ?>
+
+											  Purchase
+											<?php echo Form::checkbox('back_date_return',1,$editInfo->back_date_return); ?>
+
+											 Product Return 
+										</div> <!-- /controls -->					
+									</div> <!-- /control-group -->	
+									<div class="formSep control-group">		
+										<?php echo Form::label('id_language','Language', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::select('language', ['english' => 'English','bangla' => 'Bangla'],$editInfo->language, array('class' => 'span8')); ?>
+
+											<?php echo $errors->first('language','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div> <!-- /control-group -->	
+									<div class="formSep control-group">		
+										<?php echo Form::label('timezone','Time Zone', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::select('time_zone', ['asia/dhaka' => 'Bangladesh'],$editInfo->time_zone, array('class' => 'span8')); ?>
+
+											<?php echo $errors->first('time_zone','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div> <!-- /control-group -->	
+									
+									<div class="formSep control-group">		
+										<?php echo Form::label('print_receipt','Print receipt', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::checkbox('print_recipt_a_sale',1,$editInfo->print_recipt_a_sale); ?>
+
+											Print Receipt after sale
+											<?php echo $errors->first('print_recipt_a_sale','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div> <!-- /control-group -->	
+									<div class="formSep control-group">		
+										<?php echo Form::label('theme','Software Theme', ['class' => 'control-label']); ?>
+
+										<div class="controls">
+											<?php echo Form::select('theme', ['0' => 'Default','1' => 'Classic'],$editInfo->theme, array('class' => 'span8')); ?>
+
+											<?php echo $errors->first('theme','<p class="error">:message</p>'); ?>
+
+										</div> <!-- /controls -->					
+									</div> <!-- /control-group -->
+								</fieldset>
+								<button type="button" class="finish btn btn-primary"><i class="icon-ok"></i> Save Process</button>
+							<?php echo Form::close(); ?>
+
+						</div>
+					</div>
+				</div> <!-- /widget-content -->
+						
+			</div>
+		</div>   
+	
+
+<!-- Jquery Validation -->
+<?php echo HTML::script('js/wizard/jquery.stepy.min.js'); ?>
+
+<?php echo HTML::script('js/wizard/gebo_wizard.js'); ?>	
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('_layouts/default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

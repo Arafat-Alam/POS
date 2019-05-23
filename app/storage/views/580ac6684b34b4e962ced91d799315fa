@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Famous Corporation</title>
+    <link rel="stylesheet" href="<?php echo asset('css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo asset('css/new-custom.css'); ?>">
+</head>
+<body>
+    <? $created=substr(Session::get('receipt_info.created_at'),0,10); ?>
+<page size="A4">
+    <div class="wrapper fc">
+        <div class="my-container">
+            <div class="my-c-md-10 cell">
+                <p class="pull-right">Cell: <a href="tel:+8801919172717">01919 172717</a></p>
+            </div>
+
+            <div class="my-c-md-2 logo">
+                <img src="<?php echo asset('img/invoice-img/fc-logo.png'); ?>" alt="Famous CORPORATION">
+            </div>
+            <div class="my-c-md-8 top-title">
+                <h1>Famous <span style="color: #C10000;">Corporation</span></h1>
+                <p>All Kinds of Foreign Cosmetics, Gift items available here whole sale and Distribution</p>
+            </div>
+        </div>
+
+        <div class="my-container">
+            <div class="my-c-md-10">
+                <p>NO: <b><?php echo Session::get('receipt_info.invoice_id'); ?></b></p>
+            </div>
+        </div>
+
+
+        <div class="my-container">
+            <div class="my-c-md-10">
+                <table style="width:99%">
+                    <tr>
+                        <td colspan="2" style="border-bottom: 2px solid #fff;">&nbsp;</td>
+                        <td style="text-align: center;"><h2>Invoice</h2></td>
+                        <td colspan="3">Supply Code:</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <div class="my-c-md-8">Name: <span><?php echo Session::get('receipt_info.customer_full_name'); ?></span></div>
+                            <div class="my-c-md-2" style="margin-left: -50px;">P.O No: <?php echo Session::get('receipt_info.po_no'); ?></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <div class="my-c-md-8">Address: <?php echo Session::get('receipt_info.cust_address'); ?></div>
+                            <div class="my-c-md-2" style="margin-left: -50px;">Date: 
+                            <?php 
+                                if($created==Session::get('receipt_info.date')){
+
+                                    $transDateArr =explode(' ', Helper::dateFormat(Session::get('receipt_info.created_at')));
+                                    echo $transDateArr[0];
+                                }else{
+                                     echo Helper::dateFormat(Session::get('receipt_info.date'));
+                                }
+                            ?>
+                            </div>
+                        </td>
+<!--                        <td colspan="3">Address:</td>-->
+<!--                        <td colspan="3" style="border-left: 2px solid #fff;">Date:</td>-->
+                    </tr>
+                    <tr>
+                        <td colspan="6">&nbsp;</td>
+                    </tr>
+                    <tr class="t-head">
+                        <th>S.N</th>
+                        <th>Code</th>
+                        <th width="60%">Articales Description</th>
+                        <th>Qty.</th>
+                        <th>Price</th>
+                        <th>Total</th>
+                    </tr>
+                    <? $i = 0;  $quantity=0; $totalPoint = 0;?>
+                    <?php if(Session::has('receipt_item_infos')): ?>
+                        <?php foreach(Session::get('receipt_item_infos') as $receipt_item_info): ?>
+                            <? $i++; ?>
+                            <?php if($receipt_item_info['sale_quantity']>0): ?>
+                            <tr>
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $receipt_item_info['article_name']; ?></td>
+                                <td>
+                                    <span style='text-align:left; font-weight: bold;'>  <?php echo substr($receipt_item_info['item_name'],0,29); ?>
+
+                                        <?php if(strlen($receipt_item_info['item_name']) > 29): ?>
+                                        -
+                                        <br><br>
+                                        <?php echo substr($receipt_item_info['item_name'],29,59); ?>-
+                                        <br><br>
+                                        <?php echo substr($receipt_item_info['item_name'],59); ?>
+
+                                        <?php endif; ?>
+                                    </span>
+                                </td>
+                                <td><? $quantity+=$receipt_item_info['sale_quantity']; ?><?php echo $receipt_item_info['sale_quantity']; ?></td>
+                                <td><?php echo $receipt_item_info['sale_price']; ?></td>
+                                <td><?php echo $receipt_item_info['total']; ?></td>
+                            </tr>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                    <!-- 
+                    <tr>
+                        <td>02</td>
+                        <td>sd-66</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>10</td>
+                        <td>520</td>
+                        <td>5,200</td>
+                    </tr>
+
+
+                    <tr>
+                        <td>01</td>
+                        <td>sm-120</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, blanditiis!</td>
+                        <td>26</td>
+                        <td>520</td>
+                        <td>13,521</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>sd-66</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>10</td>
+                        <td>520</td>
+                        <td>5,200</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>sm-120</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, blanditiis!</td>
+                        <td>26</td>
+                        <td>520</td>
+                        <td>13,521</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>sd-66</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>10</td>
+                        <td>520</td>
+                        <td>5,200</td>
+                    </tr>
+
+                    <tr>
+                        <td>01</td>
+                        <td>sm-120</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, blanditiis!</td>
+                        <td>26</td>
+                        <td>520</td>
+                        <td>13,521</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>sd-66</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>10</td>
+                        <td>520</td>
+                        <td>5,200</td>
+                    </tr>
+                    <tr>
+                        <td>01</td>
+                        <td>sm-120</td>
+                        <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi, blanditiis!</td>
+                        <td>26</td>
+                        <td>520</td>
+                        <td>13,521</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>sd-66</td>
+                        <td>Lorem ipsum dolor sit amet.</td>
+                        <td>10</td>
+                        <td>520</td>
+                        <td>5,200</td>
+                    </tr>
+
+ -->
+
+
+                    <tr style="font-weight: bold;">
+                        <td colspan="4">Taka in words: <span>
+                            <?php 
+                            $f = new \NumberFormatter("en", \NumberFormatter::SPELLOUT);
+                            echo ucwords($f->format( Session::get('receipt_info.total_amount'))); ?>
+                        </span></td>
+                        <td>Total=</td>
+                        <td><?php echo Session::get('receipt_info.total_amount'); ?></td>
+                    </tr>
+
+
+
+                    <tr style="border-left: 2px solid white; border-right: 2px solid white;">
+                        <td colspan="6">
+                            <br><br>
+                            <div class="my-c-md-5">
+                                <p class="overline pull-left">Received by &nbsp;&nbsp;&nbsp;&nbsp;</p>
+                            </div>
+                            <div class="my-c-md-5">
+                                <p class="overline pull-right">&nbsp;&nbsp;For: Famous Corporation</p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr style="font-weight: bold; border: 2px solid white;">
+                        <td colspan="3" style="background-color: #ccc;">
+                            <p>Shop # 12, Gulshan Shopping Center (4th Floor), Gulshan-1, Dhaka-1212.</p>
+                        </td>
+                        <td colspan="3" style="background-color: #C10000; color: #fff;">
+                            <p>E-mail: <a href="mailto:mr.traders36@yahoo.com" style="color: #fff;">mr.traders36@yahoo.com</a></p>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</page>
+
+<!--	<page size="A4" layout="landscape"></page>-->
+
+<!-- <page size="A5"></page>
+<page size="A5" layout="landscape"></page>
+<page size="A3"></page>
+<page size="A3" layout="landscape"></page> -->
+    <script type="text/javascript">
+         window.onload = function () {
+            window.print();
+            // setTimeout(function(){window.location = "<?php echo URL::to('sale/sales'); ?>"}, 3000);
+            if(<?php echo Session::get('isAutoPrintAllow'); ?>==1){
+              window.print();
+              // setTimeout(function(){window.location = "<?php echo URL::to('sale/sales'); ?>"}, 200000);
+            }
+        }
+    </script>
+</body>
+</html>

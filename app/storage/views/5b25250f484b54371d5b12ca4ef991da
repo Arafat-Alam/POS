@@ -1,0 +1,65 @@
+<?php $__env->startSection('content'); ?>
+	<div class="row">
+	  <div class="span12">
+		<?php echo $__env->make('_sessionMessage', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			<div class="invoice-reg print_disable">
+                <?php echo Form::open(array('route' => 'income.viewIncomeReport', 'class' => 'form-horizontal')); ?>
+
+					<div class="control-group" align="center">
+						<i class="icon-calendar"></i>&nbsp; Form : <?php echo Form::text('from', date('Y-m-d'), array('class' => 'span2 datepicker', 'data-date-format'=> 'yyyy-mm-dd', 'placeholder' => 'Form date')); ?>
+
+						&nbsp;&nbsp;&nbsp;
+						<i class="icon-calendar"></i>&nbsp; To 	 : <?php echo Form::text('to', date('Y-m-d'), array('class' => 'span2 datepicker', 'data-date-format'=> 'yyyy-mm-dd', 'placeholder' => 'To date')); ?>
+
+						<input class="btn btn-primary" type="submit" value="Search">
+					</div> <!-- /control-group -->
+
+                <?php echo Form::close(); ?>
+
+            </div>
+		<?php if(isset($reports)): ?>
+		<table class="table table-striped">
+			<article style="background: #EEEEEE; padding : 4px 0 5px; border-top: 1px solid #003454;">
+				<strong style="font-size: 1.5em;"><i class="icon-money"></i> Other Income Reports : Details</strong>
+				<strong style="float: right; margin: 0 5px"><i class="icon-calendar"></i>&nbsp; From : <span style="font-weight: normal;"><?php echo Helper::onlyDMY($from); ?></span> &nbsp;&nbsp;&nbsp;<i class="icon-calendar"></i>&nbsp;&nbsp;To : <span style="font-weight: normal;"><?php echo Helper::onlyDMY($to); ?></span></strong>
+			</article>
+			<thead class="table-head">
+				<tr>
+					<th>SL</th>
+					<th>Income Type</th>
+					<th>Amount</th>
+					<th>Comment</th>
+					<th>Date</th>
+                    <th>Created By</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php if($reports): ?>
+					<? $i = 0; $total_amount = 0; ?>
+				   <?php foreach($reports as $otherIncome): ?>
+					   <tr>
+						   <td><?php echo ++$i; ?></td>
+						   <td><?php echo e($otherIncome->type_name); ?></td>
+						   <td><?php echo e($otherIncome->amount); ?></td>
+						   <? $total_amount = $total_amount + $otherIncome->amount; ?>
+						   <td><?php echo e($otherIncome->comment); ?></td>
+						   <td><?php echo e($otherIncome->date); ?></td>
+						   <td><?php echo e($otherIncome->employee_name); ?></td>
+					   </tr>
+				   <?php endforeach; ?>
+                        <tr bgcolor="#DBEAF9">
+						   <td colspan="2"><strong style="font-size: 1.3em;">Total<strong></td>
+						   <td colspan="4"><strong style="color: green;"><?php echo $total_amount; ?><strong></td>   
+					   </tr>
+				<?php else: ?>
+					<tr>
+						<td colspan="5" style="text-align:center; color:#E98203;"><strong>There are no record available.</strong><td>
+					</tr>
+				<?php endif; ?>
+			</tbody>
+		</table>
+		<?php endif; ?>
+	  </div>
+	</div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('_layouts.default', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

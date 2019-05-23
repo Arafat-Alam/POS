@@ -1,0 +1,3 @@
+"SL No.",Name,"User Name","Father's Name","Mother's Name",Mobile,Email,"Permanent Address","Present Address","National Id","Fixed Salary(Till January)","Advance Salary(Till January)","Due Salary(Till January)"
+1,"Super Admin",admin,Admin,Admin,01800000000,admin@gmail.com,Dhaka,Dhaka,1257489631,10000,0,0
+2,"Super Admin",super_admin,Admin,Admin,0180000000,superadmin@example.com,Dhaka,Dhaka,180000000,1,0,0
